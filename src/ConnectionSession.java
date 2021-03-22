@@ -4,7 +4,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 public class ConnectionSession {
-    ArrayList<String> messageList;
+    ArrayList<Message> messageList;
     String connectionName;
     String recipientAddress;
     Integer recipientPort;
@@ -21,6 +21,10 @@ public class ConnectionSession {
             Socket socket = new Socket(recipientAddress, recipientPort);
             Message message = new Message(content);
             message.setReceiverAddress(socket.getInetAddress().getHostAddress());
+            // TODO - change senderAddress
+            message.setSenderAddress("Me:localhost");
+            // TODO - add source (sent/received)
+            messageList.add(message);
             DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
             dos.writeUTF(message.MessageAsJsonString());
             System.out.println("Sent: " + message.MessageAsJsonString());
@@ -32,7 +36,12 @@ public class ConnectionSession {
         }
     }
 
-    public ArrayList<String> getMessageList() {
+    public void receiveMessage(Message message) {
+        // TODO - change senderAddress
+        message.setSenderAddress("Me:localhost");
+    }
+
+    public ArrayList<Message> getMessageList() {
         return messageList;
     }
 
@@ -52,7 +61,7 @@ public class ConnectionSession {
         this.recipientPort = recipientPort;
     }
 
-    private void setMessageList(ArrayList<String> messageList) {
+    private void setMessageList(ArrayList<Message> messageList) {
         this.messageList = messageList;
     }
 
@@ -82,6 +91,15 @@ public class ConnectionSession {
 
     public void removeOldMessages() {
 
+    }
+
+    public String getContentOfMessageList() {
+        String content = "";
+        for ( Message message : messageList) {
+            content += message.getContent();
+            content += "\n";
+        }
+        return content;
     }
 
     @Override

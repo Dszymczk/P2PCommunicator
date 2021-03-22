@@ -8,6 +8,7 @@ public class Message {
     String senderAddress;
     String receiverAddress;
     Date receivedDate;
+    // TODO - add source (sent/received)
 
     public Message(String content) {
         this.content = content;
