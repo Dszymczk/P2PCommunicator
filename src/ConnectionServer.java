@@ -5,17 +5,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ConnectionServer extends Thread {
+    P2PCommunicator communicator;
     ServerSocket serverSocket;
     int port;
     List<ConnectionSession> connectionSessionList = new ArrayList<>();
+    ServerWindow serverWindow;
 
-    public ConnectionServer( int port) throws IOException {
+    public ConnectionServer(P2PCommunicator communicator, int port) throws IOException {
+        this.communicator = communicator;
         this.port = port;
         this.serverSocket = new ServerSocket(port);
     }
 
     public void run () {
         try {
+            serverWindow = new ServerWindow(communicator);
             System.out.println("Server started");
             while (true) {
                 //Socket s = serverSocket.accept();
@@ -40,6 +44,12 @@ public class ConnectionServer extends Thread {
             message = Message.createMessageFromJsonString(dis.readUTF());
             message.setReceivedDateAsNow();
             message.setSenderAddress(IPAddress);
+            for ( ConnectionSession session : connectionSessionList ) {
+                if( session.getRecipientAddress().equals( IPAddress ) ) {
+                    System.out.println("Mamy to");
+                    session.receiveMessage(message);
+                }
+            }
         } catch (Exception exception) {
             System.out.println("Failed to convert received message to Message Object - invalid input format");
             exception.printStackTrace();

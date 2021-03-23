@@ -7,7 +7,7 @@ import java.awt.event.WindowEvent;
 
 public class ConnectionFrame extends Frame {
     ConnectionSession connectionSession;
-    JTextArea messagesField;
+    JTextPane messagesField;
     JTextArea typeMessageField;
     Button sendButton;
 
@@ -35,7 +35,8 @@ public class ConnectionFrame extends Frame {
         setLayout(gbl);
 
         // TODO - add scrollbar to text area
-        messagesField = new JTextArea();
+        messagesField = new JTextPane();
+        JScrollPane jsp = new JScrollPane(messagesField);
         messagesField.setEditable(false);
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -100,9 +101,9 @@ public class ConnectionFrame extends Frame {
         messagesField.setText(content);
     }
 
-    public static void main(String[] args) {
-        ConnectionSession session = new ConnectionSession("localhost", 4441);
-        ConnectionFrame connectionFrame = new ConnectionFrame(session);
-    }
+//    public static void main(String[] args) {
+//        ConnectionSession session = new ConnectionSession("localhost", 4441);
+//        ConnectionFrame connectionFrame = new ConnectionFrame(session);
+//    }
 
 }

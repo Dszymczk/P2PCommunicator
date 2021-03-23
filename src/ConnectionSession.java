@@ -4,12 +4,17 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 public class ConnectionSession {
+    ConnectionServer connectionServer;
+    ConnectionFrame connectionFrame;
     ArrayList<Message> messageList;
     String connectionName;
     String recipientAddress;
     Integer recipientPort;
 
-    public ConnectionSession(String recipientAddress, Integer recipientPort) {
+    public ConnectionSession(ConnectionServer connectionServer, String recipientAddress, Integer recipientPort) {
+        this.connectionFrame = new ConnectionFrame(this);
+        this.connectionServer = connectionServer;
+        connectionServer.addSession(this);
         messageList = new ArrayList<>();
         connectionName = "New connection: " + recipientAddress + ":" + recipientPort;
         this.recipientAddress = recipientAddress;
@@ -38,7 +43,8 @@ public class ConnectionSession {
 
     public void receiveMessage(Message message) {
         // TODO - change senderAddress
-        message.setSenderAddress("Me:localhost");
+        messageList.add(message);
+        connectionFrame.refreshMessagesField();
     }
 
     public ArrayList<Message> getMessageList() {
