@@ -26,9 +26,7 @@ public class ConnectionSession {
             Socket socket = new Socket(recipientAddress, recipientPort);
             Message message = new Message(content);
             message.setReceiverAddress(socket.getInetAddress().getHostAddress());
-            // TODO - change senderAddress
             message.setSenderAddress("Me:localhost");
-            // TODO - add source (sent/received)
             messageList.add(message);
             DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
             dos.writeUTF(message.MessageAsJsonString());
@@ -42,7 +40,6 @@ public class ConnectionSession {
     }
 
     public void receiveMessage(Message message) {
-        // TODO - change senderAddress
         messageList.add(message);
         connectionFrame.refreshMessagesField();
     }

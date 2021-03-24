@@ -22,8 +22,6 @@ public class ConnectionServer extends Thread {
             serverWindow = new ServerWindow(communicator);
             System.out.println("Server started");
             while (true) {
-                //Socket s = serverSocket.accept();
-                //DataInputStream dis = new DataInputStream(s.getInputStream());
                 handleNewMessage(serverSocket.accept());
             }
         } catch (IOException exception) {
@@ -38,15 +36,12 @@ public class ConnectionServer extends Thread {
         DataInputStream dis = new DataInputStream(newSocket.getInputStream());
         String IPAddress = newSocket.getInetAddress().getHostAddress();
 
-        // TODO - transferring message to appropriate ConnectionSession based on host address
-
         try {
             message = Message.createMessageFromJsonString(dis.readUTF());
             message.setReceivedDateAsNow();
             message.setSenderAddress(IPAddress);
             for ( ConnectionSession session : connectionSessionList ) {
                 if( session.getRecipientAddress().equals( IPAddress ) ) {
-                    System.out.println("Mamy to");
                     session.receiveMessage(message);
                 }
             }
@@ -61,7 +56,7 @@ public class ConnectionServer extends Thread {
     }
 
     private boolean checkConnection(Socket socket) {
-        String IPAddress = socket.getRemoteSocketAddress().toString(); //getInetAddress().toString();//	getHostAddress(); //socket.getInetAddress().getAddress().toString();
+        String IPAddress = socket.getRemoteSocketAddress().toString();
         System.out.println("Message from: " + IPAddress);
         return true;
     }

@@ -100,10 +100,4 @@ public class ConnectionFrame extends Frame {
         }
         messagesField.setText(content);
     }
-
-//    public static void main(String[] args) {
-//        ConnectionSession session = new ConnectionSession("localhost", 4441);
-//        ConnectionFrame connectionFrame = new ConnectionFrame(session);
-//    }
-
 }

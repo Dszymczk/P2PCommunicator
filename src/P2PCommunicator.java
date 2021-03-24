@@ -19,7 +19,6 @@ public class P2PCommunicator {
 
     public void openNewConnectionWindow() {
         NewConnectionWindow newConnectionWindow = new NewConnectionWindow(this);
-        //connectionServer.addSession();
     }
 
     public void newConnection(String hostAddress, int port) {
