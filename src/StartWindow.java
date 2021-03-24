@@ -4,11 +4,24 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+/** Public class representing start window.
+ *  Allows to provide port number for the server that is being started after pressing "Start sever" button.
+ *  After pressing "Start server" causes serverWindow open.
+ *  Provided port have to be numeric value.
+ * @author Damian Szymczyk
+ * @version 1.0
+ */
 public class StartWindow extends Frame {
+    /** Start server button - start server if @see portTextField contains numeric value */
     Button startServerButton;
+    /** Text field that accepts port number for server - has to be numeric */
     TextField portTextField;
+    /** Parent communicator application */
     P2PCommunicator communicator;
 
+    /** Create Start window.
+     * @param  communicator parent communicator
+     */
     public StartWindow(P2PCommunicator communicator) {
         super("Start window");
 
@@ -64,6 +77,11 @@ public class StartWindow extends Frame {
         setVisible(true);
     }
 
+    /**
+     * Checks if provided stirng represents numeric value
+     * @param strNum String to check
+     * @return boolean value informing if provided string represents numeric(integer) value
+     */
     private static boolean isNumeric(String strNum) {
         if (strNum == null) {
             return false;

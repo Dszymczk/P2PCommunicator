@@ -7,6 +7,12 @@ import java.awt.event.WindowEvent;
 public class ServerWindow extends Frame {
     P2PCommunicator communicator;
 
+    /**
+     * Start server window. Server window represents working server and allows to create new connectionSession with use of "Start new Connection" button
+     * @param communicator Parent communicator
+     * @author Damian Szymczyk
+     * @version 1.0
+     */
     public ServerWindow(P2PCommunicator communicator) {
         super("Server window");
         this.communicator = communicator;

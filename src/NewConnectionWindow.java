@@ -4,12 +4,26 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+/**
+ * ConnectionWindow allows to create new connection session. After slosing create new ConnectionSession
+ * @see ConnectionSession
+ * @author Damian Szymczyk
+ * @version 1.0
+ */
 public class NewConnectionWindow extends Frame {
+    /** Parent communicator application */
     P2PCommunicator communicator;
+    /** Text filed that accepts host server address */
     TextField hostAddress;
+    /** Text filed that accepts host server port */
     TextField hostPort;
+    /** Button that allows to create new connection */
     Button newConnectionButton;
 
+    /**
+     * Constructs new connection window
+      * @param communicator Parent communicator
+     */
     public NewConnectionWindow(P2PCommunicator communicator) {
         super("New connection");
         this.communicator = communicator;
@@ -86,10 +100,16 @@ public class NewConnectionWindow extends Frame {
         setVisible(true);
     }
 
+    /** Closes NewConnectionWindow */
     void closeWindow() {
         this.dispose();
     }
 
+    /**
+     * Checks if provided stirng represents numeric value
+     * @param strNum String to check
+     * @return boolean value informing if provided string represents numeric(integer) value
+     */
     private static boolean isNumeric(String strNum) {
         if (strNum == null) {
             return false;

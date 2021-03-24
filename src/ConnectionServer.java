@@ -4,19 +4,43 @@ import java.net.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * ConnectionServer creates new socket listening on port provided in port field and window representing this server.<br>
+ * Class handles received messages and transer it to appropriate ConnectionSession from connectionSessionList.<br>
+ * All received messages need to be in Message format.<br>
+ * ConnectionServer is started as a new Thread
+ * @see ServerWindow
+ * @see Message
+ * @author Damian Szymczyk
+ * @version 1.0
+ */
 public class ConnectionServer extends Thread {
+    /** Parent communicator*/
     P2PCommunicator communicator;
+    /** Server socket */
     ServerSocket serverSocket;
+    /** Port on which server listens */
     int port;
+    /** List of added conetctions */
     List<ConnectionSession> connectionSessionList = new ArrayList<>();
+    /** Associated serverWindow */
     ServerWindow serverWindow;
 
+    /**
+     * Create new instance of ConnectionServer
+     * @param communicator parent communicator
+     * @param port port to listen on
+     */
     public ConnectionServer(P2PCommunicator communicator, int port) throws IOException {
         this.communicator = communicator;
         this.port = port;
         this.serverSocket = new ServerSocket(port);
     }
 
+    /**
+     * Starts server in a new thread with server window.<br>
+     * Receives and handles messages
+     */
     public void run () {
         try {
             serverWindow = new ServerWindow(communicator);
@@ -30,6 +54,11 @@ public class ConnectionServer extends Thread {
         }
     }
 
+    /**
+     * Handle received message and transform it to Message object. Throws exception if message is in wrong format.<br>
+     * Sets message date and sender address
+     * @param newSocket Socket with new message
+     */
     public void handleNewMessage(Socket newSocket) throws IOException {
         Message message = null;
         checkConnection(newSocket);
@@ -55,28 +84,50 @@ public class ConnectionServer extends Thread {
         newSocket.close();
     }
 
-    private boolean checkConnection(Socket socket) {
+    /**
+     * Logs information about new messages
+     * @param socket Socket with new message
+     * @return
+     */
+    private void checkConnection(Socket socket) {
         String IPAddress = socket.getRemoteSocketAddress().toString();
         System.out.println("Message from: " + IPAddress);
-        return true;
     }
 
+    /**
+     * Adds new session to session list
+     * @param newSession Session to add
+     */
     public void addSession(ConnectionSession newSession) {
         connectionSessionList.add(newSession);
     }
 
-    public void setServerSocket(ServerSocket serverSocket) {
+    /**
+     * Sets server socket
+     * @param serverSocket Socket to set
+     */
+    private void setServerSocket(ServerSocket serverSocket) {
         this.serverSocket = serverSocket;
     }
 
-    public void setPort(int port) {
+    /**
+     * Sets server port
+     * @param port Port to set
+     */
+    private void setPort(int port) {
         this.port = port;
     }
 
-    public ServerSocket getServerSocket() {
+    /**
+     * @return Server socket
+     */
+    private ServerSocket getServerSocket() {
         return serverSocket;
     }
 
+    /**
+     * @return Server port
+     */
     public int getPort() {
         return port;
     }

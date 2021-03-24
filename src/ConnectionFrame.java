@@ -5,13 +5,29 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+/**
+ * Connection frame creates window that provide:<br>
+ *  - Text area to type new message<br>
+ *  - Text area showing messages history<br>
+ *  - Button to send nawe message
+ * @author Damian Szymczyk
+ * @version 1.0
+ */
 public class ConnectionFrame extends Frame {
+    /** connectionSesion that is represented by opened window*/
     ConnectionSession connectionSession;
+    /** Messages history field*/
     JTextPane messagesField;
+    /** New messages text field*/
     JTextArea typeMessageField;
+    /** Button to send new message */
     Button sendButton;
 
-    public ConnectionFrame(ConnectionSession connectionSession) throws HeadlessException {
+    /**
+     * Constructor that creates connection window.<br>
+     * @param connectionSession connectionSession that is attached to created window
+     */
+    public ConnectionFrame(ConnectionSession connectionSession) {
         super("Connection frame");
 
         this.connectionSession = connectionSession;
@@ -89,6 +105,9 @@ public class ConnectionFrame extends Frame {
         setVisible(true);
     }
 
+    /**
+     * Refreshes messages field
+     */
     public void refreshMessagesField() {
         String content = "";
         for( Message message : connectionSession.getMessageList() ) {
