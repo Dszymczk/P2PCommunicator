@@ -63,8 +63,8 @@ public class ConnectionFrame extends Frame {
         gbc.fill = GridBagConstraints.BOTH;
 
 
-        gbl.setConstraints(messagesField, gbc);
-        add(messagesField);
+        gbl.setConstraints(jsp, gbc);
+        add(jsp);
 
         typeMessageField = new JTextArea();
         typeMessageField.setLineWrap(true);
